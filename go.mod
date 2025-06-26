@@ -1,4 +1,4 @@
-module go-hypr-monitor
+module hyprspacefix
 
 go 1.23.1
 
