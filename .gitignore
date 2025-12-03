@@ -1,0 +1,10 @@
+# Binary
+hyprspacefix
+
+# System and editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.swn
+*~

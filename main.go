@@ -1,3 +1,9 @@
+// hyprctl keyword workspace "$ws,monitor:$name,persistent:true"
+// hyprctl dispatch moveworkspacetomonitor $ws $name
+
+// How should we call it?
+// $0 --name="blah" --range=n-m
+
 package main
 
 import (
