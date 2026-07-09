@@ -60,7 +60,7 @@ func workspaceCommands(ws int, name string, useLua, persistent bool) []string {
 		// 0.55). Without persistence the rule only affects future creation;
 		// with it, existing workspaces get relocated too — at the cost of the
 		// workspace always existing, so some bars show it even when empty.
-		rule := fmt.Sprintf("eval hl.workspace_rule({ workspace = '%d', monitor = '%s'", ws, name)
+		rule := fmt.Sprintf("dispatch hl.dsp.workspace.move({ workspace = '%d', monitor = '%s'", ws, name)
 		if persistent {
 			rule += ", persistent = true"
 		}
