@@ -55,17 +55,19 @@ func detectLuaSyntax() (useLua bool, version string, err error) {
 // monitor name, in either Lua (0.55+) or legacy hyprlang syntax.
 func workspaceCommands(ws int, name string, useLua, persistent bool) []string {
 	if useLua {
-		// A persistent rule both binds the workspace to the monitor and
-		// creates/places it there (the move dispatchers are gone/no-op on
-		// 0.55). Without persistence the rule only affects future creation;
-		// with it, existing workspaces get relocated too — at the cost of the
-		// workspace always existing, so some bars show it even when empty.
-		rule := fmt.Sprintf("dispatch hl.dsp.workspace.move({ workspace = '%d', monitor = '%s'", ws, name)
+		// Emit both: the workspace_rule binds the workspace to the monitor
+		// for future creation (and, with persistent, keeps it existing so
+		// bars can show it even when empty), while the move dispatcher
+		// relocates the workspace if it already exists right now. The rule
+		// alone only affects future creation; the move alone doesn't persist
+		// the binding. Persistence is a property of the rule, not the move.
+		rule := fmt.Sprintf("eval hl.workspace_rule({ workspace = '%d', monitor = '%s'", ws, name)
 		if persistent {
 			rule += ", persistent = true"
 		}
 		rule += " })"
-		return []string{rule}
+		move := fmt.Sprintf("dispatch hl.dsp.workspace.move({ workspace = '%d', monitor = '%s' })", ws, name)
+		return []string{rule, move}
 	}
 	kw := fmt.Sprintf("keyword workspace %d,monitor:%s", ws, name)
 	if persistent {
