@@ -25,7 +25,7 @@ jobs:
           CGO_ENABLED=0 go build -ldflags="-s -w" -o hyprspacefix
 
       - name: Create Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: hyprspacefix
           generate_release_notes: true
